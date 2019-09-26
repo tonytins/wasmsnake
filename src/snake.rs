@@ -22,21 +22,29 @@ impl Snake {
         // TODO: move to separate methods
         let head_x: u32 = js!(
         return Math.floor(Math.random() * @{width})
-        ).try_into().unwrap();
+        )
+        .try_into()
+        .unwrap();
 
         let head_y: u32 = js!(
         return Math.floor(Math.random() * @{height})
-        ).try_into().unwrap();
+        )
+        .try_into()
+        .unwrap();
 
         let head = Block(head_x, head_y);
 
         let food_x: u32 = js!(
         return Math.floor(Math.random() * @{width})
-        ).try_into().unwrap();
+        )
+        .try_into()
+        .unwrap();
 
         let food_y: u32 = js!(
         return Math.floor(Math.random() * @{height})
-        ).try_into().unwrap();
+        )
+        .try_into()
+        .unwrap();
 
         let food = Block(food_x, food_y);
         let tail = Vec::new();
@@ -49,7 +57,7 @@ impl Snake {
             width,
             direction: None,
             next_direction: None,
-            last_direction: Direction::Right
+            last_direction: Direction::Right,
         }
     }
 
@@ -66,10 +74,14 @@ impl Snake {
         self.last_direction = direction;
 
         let new_head = match direction {
-            Direction::Up => Block((self.head.0) % self.width, (self.head.1 - 1) % self.height),
+            Direction::Up => Block((self.head.0) % self.width,
+                                   (self.head.1.checked_sub(1).unwrap_or(self.height - 1)) % self.height
+            ),
             Direction::Down => Block((self.head.0) % self.width, (self.head.1 + 1) % self.height),
             Direction::Right => Block((self.head.0 + 1) % self.width, (self.head.1) % self.height),
-            Direction::Left => Block((self.head.0 - 1) % self.width, (self.head.1) % self.height)
+            Direction::Left => Block((self.head.0.checked_sub(1).unwrap_or(self.width - 1)) % self.width,
+                                     (self.head.1) % self.height
+            ),
         };
 
         self.tail.insert(0, self.head);
@@ -86,11 +98,15 @@ impl Snake {
             while food == self.head || self.tail.contains(&food) {
                 let food_x: u32 = js!(
                 return Math.floor(Math.random() * @{self.width})
-                ).try_into().unwrap();
+                )
+                .try_into()
+                .unwrap();
 
                 let food_y: u32 = js!(
                 return Math.floor(Math.random() * @{self.height})
-                ).try_into().unwrap();
+                )
+                .try_into()
+                .unwrap();
 
                 food = Block(food_x, food_y);
             }

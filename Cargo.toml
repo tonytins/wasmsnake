@@ -1,6 +1,6 @@
 [package]
-name = "wasm-snake"
-version = "0.1.0"
+name = "wasmsnake"
+version = "0.1.1"
 authors = ["Anthony Wilcox"]
 edition = "2018"
 

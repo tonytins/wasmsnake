@@ -1,0 +1,16 @@
+body {
+  background-color: black;
+  text-align: center;
+  color: white;
+}
+
+a {
+  color: aqua;
+}
+
+canvas {
+  margin-top: 2em;
+  margin-right: auto;
+  margin-left: auto;
+  display: block;
+}
